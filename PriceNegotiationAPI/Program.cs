@@ -1,3 +1,7 @@
+using PriceNegotiationAPI.Application.Configuration;
+using PriceNegotiationAPI.Configuration;
+using PriceNegotiationAPI.Infrastructure.Configuration;
+
 namespace PriceNegotiationAPI;
 
 public class Program
@@ -5,17 +9,16 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
-
-        builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
+        
+        builder.Services
+            .AddSwaggerGen()
+            .AddApplication()
+            .AddInfrastructure()
+            .AddPresentation()
+            .AddEndpointsApiExplorer()
+            .AddControllers();
+        
         var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -23,12 +26,8 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-
         app.UseAuthorization();
-
-
         app.MapControllers();
-
         app.Run();
     }
 }

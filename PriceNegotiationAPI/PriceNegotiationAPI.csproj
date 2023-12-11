@@ -22,4 +22,10 @@
       <Folder Include="Controllers\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\PriceNegotiationAPI.Application\PriceNegotiationAPI.Application.csproj" />
+      <ProjectReference Include="..\PriceNegotiationAPI.Domain\PriceNegotiationAPI.Domain.csproj" />
+      <ProjectReference Include="..\PriceNegotiationAPI.Infrastructure\PriceNegotiationAPI.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
