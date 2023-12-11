@@ -1,8 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceNegotiationAPI", "PriceNegotiationAPI\PriceNegotiationAPI.csproj", "{A5792092-8FBB-4566-962C-D34D5B8E7962}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceNegotiationAPI.Infrastructure", "PriceNegotiationAPI.Infrastructure\PriceNegotiationAPI.Infrastructure.csproj", "{2A334CD5-1611-40D5-B695-FF374B1D7A72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceNegotiationAPI.Application", "PriceNegotiationAPI.Application\PriceNegotiationAPI.Application.csproj", "{B569C528-ACB8-4881-AB34-A9ECB8D9025A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceNegotiationAPI.Domain", "PriceNegotiationAPI.Domain\PriceNegotiationAPI.Domain.csproj", "{35C1E61A-5E38-408D-8109-C5B794E4EA2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5792092-8FBB-4566-962C-D34D5B8E7962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5792092-8FBB-4566-962C-D34D5B8E7962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5792092-8FBB-4566-962C-D34D5B8E7962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5792092-8FBB-4566-962C-D34D5B8E7962}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A334CD5-1611-40D5-B695-FF374B1D7A72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A334CD5-1611-40D5-B695-FF374B1D7A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A334CD5-1611-40D5-B695-FF374B1D7A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A334CD5-1611-40D5-B695-FF374B1D7A72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B569C528-ACB8-4881-AB34-A9ECB8D9025A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B569C528-ACB8-4881-AB34-A9ECB8D9025A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B569C528-ACB8-4881-AB34-A9ECB8D9025A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B569C528-ACB8-4881-AB34-A9ECB8D9025A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35C1E61A-5E38-408D-8109-C5B794E4EA2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35C1E61A-5E38-408D-8109-C5B794E4EA2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35C1E61A-5E38-408D-8109-C5B794E4EA2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35C1E61A-5E38-408D-8109-C5B794E4EA2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
