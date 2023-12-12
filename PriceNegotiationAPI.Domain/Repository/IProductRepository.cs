@@ -4,8 +4,8 @@ namespace PriceNegotiationAPI.Domain.Repository;
 
 public interface IProductRepository
 {
-    Task<IEnumerable<Product>> GetAllProductsAsync();
-    Task<Product> GetProductByIdAsync(int productId);
-    Task AddProductAsync(Product product);
-    Task DeleteProductAsync(int productId);
+    Task<IEnumerable<Product>> GetAllProductsAsync(CancellationToken ct = default);
+    Task<Product> GetProductByIdAsync(int productId, CancellationToken ct = default);
+    Task AddProductAsync(Product product, CancellationToken ct = default);
+    Task DeleteProductAsync(int productId, CancellationToken ct = default);
 }

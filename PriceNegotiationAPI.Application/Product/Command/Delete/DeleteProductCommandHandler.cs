@@ -1,11 +1,18 @@
 ﻿using PriceNegotiationAPI.Application.Abstraction;
+using PriceNegotiationAPI.Domain.Repository;
 
 namespace PriceNegotiationAPI.Application.Product.Command.Delete;
 
 internal class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand>
 {
-    public Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+    private readonly IProductRepository _productRepository;
+
+    public DeleteProductCommandHandler(IProductRepository productRepository)
     {
-        throw new NotImplementedException();
+        _productRepository = productRepository;
+    }
+    public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+    {
+        await _productRepository.DeleteProductAsync(request.ProductId, cancellationToken);
     }
 }

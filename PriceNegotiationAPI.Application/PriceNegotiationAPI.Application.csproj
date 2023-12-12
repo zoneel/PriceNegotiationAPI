@@ -7,14 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.8.1" />
       <PackageReference Include="MediatR" Version="12.2.0" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Negotiation\Mapping\" />
-      <Folder Include="Product\Mapping\" />
       <Folder Include="User\Mapping\" />
       <Folder Include="User\Query\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PriceNegotiationAPI.Domain\PriceNegotiationAPI.Domain.csproj" />
     </ItemGroup>
 
 </Project>
