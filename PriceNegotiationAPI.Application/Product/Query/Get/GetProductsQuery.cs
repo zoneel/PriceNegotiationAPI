@@ -3,4 +3,4 @@ using PriceNegotiationAPI.Application.Product.Dto;
 
 namespace PriceNegotiationAPI.Application.Product.Query.Get;
 
-internal record GetProductsQuery() : IQuery<List<ProductDto>>;
+public record GetProductsQuery() : IQuery<List<ProductDto>>;

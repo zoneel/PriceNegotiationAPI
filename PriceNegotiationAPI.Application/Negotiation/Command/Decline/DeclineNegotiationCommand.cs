@@ -2,4 +2,4 @@
 
 namespace PriceNegotiationAPI.Application.Negotiation.Command.Decline;
 
-internal record DeclineNegotiationCommand(int NegotiationId) : ICommand;
+public record DeclineNegotiationCommand(int NegotiationId) : ICommand;

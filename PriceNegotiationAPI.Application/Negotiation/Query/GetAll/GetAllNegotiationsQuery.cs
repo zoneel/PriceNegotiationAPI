@@ -3,4 +3,4 @@ using PriceNegotiationAPI.Application.Negotiation.Dto;
 
 namespace PriceNegotiationAPI.Application.Negotiation.Query.GetAll;
 
-internal record GetAllNegotiationsQuery() : IQuery<List<ShowNegotiationDto>>;
+public record GetAllNegotiationsQuery() : IQuery<List<ShowNegotiationDto>>;

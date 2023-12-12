@@ -2,4 +2,4 @@
 
 namespace PriceNegotiationAPI.Application.Product.Command.Delete;
 
-internal record DeleteProductCommand(int ProductId) : ICommand;
+public record DeleteProductCommand(int ProductId) : ICommand;
