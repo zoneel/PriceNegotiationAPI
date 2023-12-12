@@ -5,11 +5,11 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
+WORKDIR /app
 COPY ["PriceNegotiationAPI/PriceNegotiationAPI.csproj", "PriceNegotiationAPI/"]
 RUN dotnet restore "PriceNegotiationAPI/PriceNegotiationAPI.csproj"
 COPY . .
-WORKDIR "/src/PriceNegotiationAPI"
+WORKDIR "PriceNegotiationAPI"
 RUN dotnet build "PriceNegotiationAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
