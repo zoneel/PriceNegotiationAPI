@@ -12,6 +12,7 @@ public static class ServiceCollection
     {
         services
             .AddScoped<IProductRepository, ProductRepository>()
+            .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<ExceptionHandlingMiddleware>();
         
         return services;

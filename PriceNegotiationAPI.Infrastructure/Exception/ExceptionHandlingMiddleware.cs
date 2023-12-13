@@ -5,29 +5,49 @@ using PriceNegotiationAPI.Domain.Exceptions;
 namespace PriceNegotiationAPI.Infrastructure.Exception;
 
 public class ExceptionHandlingMiddleware : IMiddleware
-{
-    private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+    {
+        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-    public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger)
-    {
-        _logger = logger;
-    }
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
-    {
-        try
+        public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger)
         {
-            await next(context);
+            _logger = logger;
         }
-        catch (System.Exception e)
+
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            string errorMessage = e switch
+            try
             {
-                IdempotencyException idempotencyException => $"[{idempotencyException.statusCode}] {idempotencyException.GetType().Name} - {idempotencyException.Message}",
-                ProductNotFoundException productNotFoundException => $"[{productNotFoundException.statusCode}] {productNotFoundException.GetType().Name} - {productNotFoundException.Message}",
-                _ => "[Middleware] An unexpected error occurred."
-            };
+                await next(context);
+            }
+            catch (System.Exception e)
+            {
+                string errorMessage = "[Middleware] An unexpected error occurred.";
+                int statusCode = StatusCodes.Status500InternalServerError; // Default status code for other exceptions
 
-            await context.Response.WriteAsync(errorMessage);
+                switch (e)
+                {
+                    case IdempotencyException idempotencyException:
+                        errorMessage = $"[{idempotencyException.StatusCode}] {idempotencyException.GetType().Name} - {idempotencyException.Message}";
+                        statusCode = idempotencyException.StatusCode;
+                        context.Response.StatusCode = StatusCodes.Status409Conflict;
+                        break;
+                    case ProductNotFoundException productNotFoundException:
+                        errorMessage = $"[{productNotFoundException.StatusCode}] {productNotFoundException.GetType().Name} - {productNotFoundException.Message}";
+                        statusCode = productNotFoundException.StatusCode;
+                        context.Response.StatusCode = StatusCodes.Status404NotFound;
+                        break;
+                    case InvalidCredentialsException invalidCredentialsException:
+                        errorMessage = $"[{invalidCredentialsException.StatusCode}] {invalidCredentialsException.GetType().Name} - {invalidCredentialsException.Message}";
+                        statusCode = invalidCredentialsException.StatusCode;
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        break;
+                }
+
+                _logger.LogError(errorMessage); // Log the error
+
+                context.Response.ContentType = "text/plain";
+                context.Response.StatusCode = statusCode;
+                await context.Response.WriteAsync(errorMessage);
+            }
         }
     }
-}
