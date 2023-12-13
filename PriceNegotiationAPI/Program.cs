@@ -13,7 +13,7 @@ public class Program
 
         builder.Services
             .AddSwaggerGen()
-            .AddApplication()
+            .AddApplication(builder.Configuration)
             .AddInfrastructure()
             .AddPresentation()
             .AddEndpointsApiExplorer()

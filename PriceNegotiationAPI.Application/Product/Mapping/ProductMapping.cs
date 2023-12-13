@@ -9,6 +9,17 @@ public class ProductMapping
     {
         var product = new Domain.Entities.Product
         {
+            Id = productDto.ProductId,
+            Name = productDto.Name,
+            BasePrice = new Price(productDto.BasePrice)
+        };
+        return product;
+    }
+    
+    public static Domain.Entities.Product MapAddProductDtoToProductEntity(AddProductDto productDto)
+    {
+        var product = new Domain.Entities.Product
+        {
             Name = productDto.Name,
             BasePrice = new Price(productDto.BasePrice)
         };
@@ -22,6 +33,7 @@ public class ProductMapping
         {
             var productDto = new ProductDto()
             {
+                ProductId = product.Id,
                 Name = product.Name,
                 BasePrice = product.BasePrice.Value
             };

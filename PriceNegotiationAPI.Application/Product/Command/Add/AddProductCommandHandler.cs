@@ -14,7 +14,7 @@ internal class AddProductCommandHandler : ICommandHandler<AddProductCommand>
     }
     public async Task Handle(AddProductCommand request, CancellationToken cancellationToken)
     {
-        var product = ProductMapping.MapProductDtoToProductEntity(request.Dto);
+        var product = ProductMapping.MapAddProductDtoToProductEntity(request.Dto);
         await _productRepository.AddProductAsync(product, cancellationToken);
     }
 }

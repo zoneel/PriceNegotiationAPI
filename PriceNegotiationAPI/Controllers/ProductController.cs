@@ -14,17 +14,17 @@ namespace PriceNegotiationAPI.Controllers;
 public class ProductController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IValidator<ProductDto> _productValidator;
+    private readonly IValidator<AddProductDto> _productValidator;
     private readonly IValidator<int> _idValidator;
 
-    public ProductController(IMediator mediator, IValidator<ProductDto> productValidator, IValidator<int> idValidator)
+    public ProductController(IMediator mediator, IValidator<AddProductDto> productValidator, IValidator<int> idValidator)
     {
         _mediator = mediator;
         _productValidator = productValidator;
         _idValidator = idValidator;
     }
     [HttpPost]
-    public async Task<IActionResult> CreateProduct([FromBody] ProductDto product)
+    public async Task<IActionResult> CreateProduct([FromBody] AddProductDto product)
     {
         var validationResult = await _productValidator.ValidateAsync(product);
 
