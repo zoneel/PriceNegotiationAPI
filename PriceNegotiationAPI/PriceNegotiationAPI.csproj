@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9"/>
+        <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
     </ItemGroup>
 
@@ -22,6 +23,10 @@
       <ProjectReference Include="..\PriceNegotiationAPI.Application\PriceNegotiationAPI.Application.csproj" />
       <ProjectReference Include="..\PriceNegotiationAPI.Domain\PriceNegotiationAPI.Domain.csproj" />
       <ProjectReference Include="..\PriceNegotiationAPI.Infrastructure\PriceNegotiationAPI.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="log20231212.txt" />
     </ItemGroup>
 
 </Project>

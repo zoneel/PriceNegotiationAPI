@@ -1,6 +1,7 @@
 using PriceNegotiationAPI.Application.Configuration;
 using PriceNegotiationAPI.Configuration;
 using PriceNegotiationAPI.Infrastructure.Configuration;
+using PriceNegotiationAPI.Infrastructure.Exception;
 
 namespace PriceNegotiationAPI;
 
@@ -9,7 +10,7 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        
+
         builder.Services
             .AddSwaggerGen()
             .AddApplication()
@@ -25,6 +26,7 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();
