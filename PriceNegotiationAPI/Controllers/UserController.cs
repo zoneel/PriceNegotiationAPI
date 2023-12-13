@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PriceNegotiationAPI.Application.User.Command.Login;
 using PriceNegotiationAPI.Application.User.Command.Register;
@@ -10,7 +11,8 @@ using PriceNegotiationAPI.Domain.Security;
 namespace PriceNegotiationAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Authorize]
+[Route("api/[controller]")]
 public class UserController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -24,6 +26,7 @@ public class UserController : ControllerBase
         _userLoginValidator = userLoginValidator;
     }
 
+    [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto user)
     {
@@ -39,6 +42,7 @@ public class UserController : ControllerBase
         return Ok(new { Status = "User Registered" });
     }
 
+    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<JwtToken> LoginUser([FromBody] LoginUserDto user)
     {

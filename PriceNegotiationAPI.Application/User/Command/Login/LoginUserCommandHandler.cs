@@ -27,8 +27,7 @@ internal class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, JwtTo
         if (!_passwordManager.ValidateAsync(request.Dto.Password, user.Password, cancellationToken)) 
             throw new InvalidCredentialsException("Invalid username or password");
 
-        //TODO generate JWT TOKEN 
-        var token = await _jwtService.CreateTokenAsync(user.Id, user.Role);
+        var token = await _jwtService.CreateTokenAsync(user.UserId, user.Role);
         return token;
     }
 }

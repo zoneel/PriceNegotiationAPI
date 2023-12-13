@@ -1,26 +1,44 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
 using PriceNegotiationAPI.Application.Negotiation.Command.Accept;
 using PriceNegotiationAPI.Application.Negotiation.Command.Create;
 using PriceNegotiationAPI.Application.Negotiation.Command.Decline;
 using PriceNegotiationAPI.Application.Negotiation.Dto;
+using PriceNegotiationAPI.Application.Negotiation.Query.GetAll;
+using PriceNegotiationAPI.Application.Negotiation.Query.GetPending;
 
 namespace PriceNegotiationAPI.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class NegotiationController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IValidator<AddNegotiationDto> _negotiationValidator;
 
-    public NegotiationController(IMediator mediator)
+    public NegotiationController(IMediator mediator, IValidator<AddNegotiationDto> negotiationValidator)
     {
         _mediator = mediator;
+        _negotiationValidator = negotiationValidator;
     }
+    
     [HttpPost]
-    public async Task<IActionResult> CreateNegotiation([FromBody] NegotiationDto negotiation)
+    public async Task<IActionResult> CreateNegotiation([FromBody] AddNegotiationDto addNegotiation)
     {
-        await _mediator.Send(new CreateNegotiationCommand(negotiation));
+        var userId = Convert.ToInt32(HttpContext.User.FindFirst(JwtRegisteredClaimNames.Sid).Value);
+        var validationResult = await _negotiationValidator.ValidateAsync(addNegotiation);
+
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(error => error.ErrorMessage);
+            return BadRequest(errors);
+        }
+        
+        await _mediator.Send(new CreateNegotiationCommand(addNegotiation, userId));
         return Ok(new { Status = "Negotiation Created" });
     }
 
@@ -36,5 +54,19 @@ public class NegotiationController : ControllerBase
     {
         await _mediator.Send(new DeclineNegotiationCommand(negotiationId));
         return Ok(new { Status = "Negotiation rejected" });
+    }
+    
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllNegotiations()
+    {
+        var negotiations = await _mediator.Send(new GetAllNegotiationsQuery());
+        return Ok(negotiations);
+    }
+    
+    [HttpGet("pending")]
+    public async Task<IActionResult> GetAllPendingNegotiations()
+    {
+        var negotiations = await _mediator.Send(new GetPendingNegotiationsQuery());
+        return Ok(negotiations);
     }
 }

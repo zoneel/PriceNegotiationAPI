@@ -22,7 +22,7 @@ public class ExceptionHandlingMiddleware : IMiddleware
             catch (System.Exception e)
             {
                 string errorMessage = "[Middleware] An unexpected error occurred.";
-                int statusCode = StatusCodes.Status500InternalServerError; // Default status code for other exceptions
+                int statusCode = StatusCodes.Status500InternalServerError;
 
                 switch (e)
                 {
@@ -40,6 +40,11 @@ public class ExceptionHandlingMiddleware : IMiddleware
                         errorMessage = $"[{invalidCredentialsException.StatusCode}] {invalidCredentialsException.GetType().Name} - {invalidCredentialsException.Message}";
                         statusCode = invalidCredentialsException.StatusCode;
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        break;
+                    case HighballOfferException highballOfferException:
+                        errorMessage = $"[{highballOfferException.StatusCode}] {highballOfferException.GetType().Name} - {highballOfferException.Message}";
+                        statusCode = highballOfferException.StatusCode;
+                        context.Response.StatusCode = StatusCodes.Status406NotAcceptable;
                         break;
                 }
 

@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
 using PriceNegotiationAPI.Application.Product.Command.Add;
 using PriceNegotiationAPI.Application.Product.Command.Delete;
 using PriceNegotiationAPI.Application.Product.Dto;
@@ -10,6 +12,7 @@ using PriceNegotiationAPI.Application.Validators;
 namespace PriceNegotiationAPI.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class ProductController : ControllerBase
 {
@@ -23,6 +26,7 @@ public class ProductController : ControllerBase
         _productValidator = productValidator;
         _idValidator = idValidator;
     }
+    
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] AddProductDto product)
     {

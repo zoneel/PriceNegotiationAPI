@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using PriceNegotiationAPI.Application.Negotiation.Dto;
 using PriceNegotiationAPI.Application.Product.Dto;
 using PriceNegotiationAPI.Application.Security;
 using PriceNegotiationAPI.Application.User.Dto;
@@ -54,9 +55,10 @@ public static class ServiceCollection
             .AddTransient<IValidator<AddProductDto>, AddProductDtoValidator>()
             .AddTransient<IValidator<int>, IntValidator>()
             .AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>()
+            .AddTransient<IValidator<RegisterUserDto>, RegisterUserDtoValidator>()
+            .AddTransient<IValidator<AddNegotiationDto>, AddNegotiationDtoValidator>()
             .AddSingleton<IPasswordHasher<Domain.Entities.User>, PasswordHasher<Domain.Entities.User>>()
             .AddTransient<IPasswordManager, PasswordManager>()
-            .AddTransient<IValidator<RegisterUserDto>, RegisterUserDtoValidator>()
             .AddTransient<IJwtService, JwtService>();
         
         return services;

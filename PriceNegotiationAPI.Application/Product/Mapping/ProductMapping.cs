@@ -11,7 +11,7 @@ public class ProductMapping
         {
             Id = productDto.ProductId,
             Name = productDto.Name,
-            BasePrice = new Price(productDto.BasePrice)
+            BasePrice = productDto.BasePrice
         };
         return product;
     }
@@ -21,7 +21,7 @@ public class ProductMapping
         var product = new Domain.Entities.Product
         {
             Name = productDto.Name,
-            BasePrice = new Price(productDto.BasePrice)
+            BasePrice = productDto.BasePrice
         };
         return product;
     }
@@ -35,7 +35,7 @@ public class ProductMapping
             {
                 ProductId = product.Id,
                 Name = product.Name,
-                BasePrice = product.BasePrice.Value
+                BasePrice = product.BasePrice
             };
             productDtos.Add(productDto);
         }

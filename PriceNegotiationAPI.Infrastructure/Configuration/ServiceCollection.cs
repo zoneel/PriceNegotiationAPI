@@ -13,7 +13,8 @@ public static class ServiceCollection
         services
             .AddScoped<IProductRepository, ProductRepository>()
             .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<ExceptionHandlingMiddleware>();
+            .AddScoped<ExceptionHandlingMiddleware>()
+            .AddScoped<INegotiationRepository, NegotiationRepository>();
         
         return services;
     }

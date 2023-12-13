@@ -41,6 +41,7 @@ public class ProductRepository : IProductRepository
         using IDbConnection conn = Connection;
         conn.Open();
         var product = await conn.QueryFirstOrDefaultAsync<Product>("SELECT * FROM Products WHERE ProductID = @ProductId", new { ProductId = productId });
+        product.Id = productId;
         return product;
     }
 
@@ -48,7 +49,7 @@ public class ProductRepository : IProductRepository
     {
         using IDbConnection conn = Connection;
         conn.Open();
-        await conn.ExecuteAsync("INSERT INTO Products (Name, BasePrice) VALUES (@Name, @BasePrice)", new { Name = product.Name, BasePrice = product.BasePrice.Value });
+        await conn.ExecuteAsync("INSERT INTO Products (Name, BasePrice) VALUES (@Name, @BasePrice)", new { Name = product.Name, BasePrice = product.BasePrice });
     }
 
     public async Task DeleteProductAsync(int productId, CancellationToken ct = default)
