@@ -44,7 +44,7 @@ public class JwtService : IJwtService
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sid, UserId.ToString()),
-            new("Role", Guid.NewGuid().ToString()),
+            new("Role", roleId.ToString()),
         };
 
         var expires = now.Add(_expiry);

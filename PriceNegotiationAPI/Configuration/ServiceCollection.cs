@@ -18,6 +18,14 @@ public static class ServiceCollection
         });
         #endregion
         
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("EmployeeOnlyPolicy", policy =>
+            {
+                policy.RequireClaim("Role", "1");
+            });
+        });
+        
         return services;
     }
 }
