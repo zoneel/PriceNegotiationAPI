@@ -18,12 +18,20 @@ namespace PriceNegotiationAPI.Infrastructure.Repository;
 
         private IDbConnection Connection => new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-        public async Task<IEnumerable<Negotiation>> GetAllNegotiationsAsync(CancellationToken ct = default)
+        public async Task<List<Negotiation>> GetAllNegotiationsAsync(CancellationToken ct = default)
         {
             using IDbConnection conn = Connection;
             conn.Open();
             var negotiations = await conn.QueryAsync<Negotiation>("SELECT * FROM Negotiations");
-            return negotiations;
+            return new List<Negotiation>(negotiations);
+        }
+        
+        public async Task<List<Negotiation>> GetAllPendingNegotiationsAsync(CancellationToken ct = default)
+        {
+            using IDbConnection conn = Connection;
+            conn.Open();
+            var negotiations = await conn.QueryAsync<Negotiation>("SELECT * FROM Negotiations WHERE Status = 0");
+            return new List<Negotiation>(negotiations);
         }
 
         public async Task<Negotiation> GetNegotiationByIdAsync(int negotiationId, CancellationToken ct = default)

@@ -17,4 +17,18 @@ public class NegotiationMapping
         };
         return negotiation;
     }
+    
+    public static ShowNegotiationDto MapNegotiationEntityToShowNegotiationDto(Domain.Entities.Negotiation negotiation)
+    {
+        var showNegotiation = new ShowNegotiationDto
+        {
+            NegotiationId = negotiation.NegotiationId,
+            ProductId = negotiation.ProductId,
+            ProposedPrice = negotiation.ProposedPrice,
+            UserAttempts = negotiation.UserAttempts,
+            Status = negotiation.Status,
+            CreatorUserId = negotiation.CreatorUserId
+        };
+        return showNegotiation;
+    }
 }
