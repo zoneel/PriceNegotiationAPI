@@ -16,14 +16,22 @@ internal class DeclineNegotiationCommandHandler : ICommandHandler<DeclineNegotia
     public async Task Handle(DeclineNegotiationCommand request, CancellationToken cancellationToken)
     {
         var negotiation = await _negotiationRepository.GetNegotiationByIdAsync(request.NegotiationId, cancellationToken);
+        
         if (negotiation == null)
-        {
             throw new ProductNotFoundException("Negotiation not found");
+        
+        switch (negotiation.Status)
+        {
+            case OfferState.Rejected:
+                throw new IdempotencyException("Negotiation already rejected.");
+
+            case OfferState.Accepted:
+                throw new NegotiationAlreadyAcceptedException("Negotiation already accepted. Once accepted, it cannot be rejected by this endpoint.");
         }
+
+        if (negotiation.UserAttempts > 3)
+            throw new TooManyAttemptsException("You have already bumped this negotiation more than 3 times.");
         
-        if(negotiation.Status == OfferState.Rejected)
-            throw new IdempotencyException("Negotiation already rejected.");
-        
-        await _negotiationRepository.DeclineNegotiationAsync(request.NegotiationId, cancellationToken);
+        await _negotiationRepository.DeclineNegotiationAsync(request.NegotiationId, negotiation.UserAttempts, cancellationToken);
     }
 }

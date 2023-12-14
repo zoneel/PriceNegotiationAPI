@@ -55,34 +55,32 @@ namespace PriceNegotiationAPI.Infrastructure.Repository;
             await conn.ExecuteAsync("UPDATE Negotiations SET Status = @Status WHERE NegotiationId = @NegotiationId", new { NegotiationId = negotiationId, Status = 1 });
         }
         
-        public async Task DeclineNegotiationAsync(int negotiationId, CancellationToken ct = default)
+        public async Task DeclineNegotiationAsync(int negotiationId, int currentAttempts, CancellationToken ct = default)
         {
+            currentAttempts = currentAttempts + 1;
             using IDbConnection conn = Connection;
             conn.Open();
-            await conn.ExecuteAsync("UPDATE Negotiations SET Status = @Status WHERE NegotiationId = @NegotiationId", new { NegotiationId = negotiationId, Status = 2 });
+            await conn.ExecuteAsync("UPDATE Negotiations SET Status = @Status, UserAttempts = @UserAttempts WHERE NegotiationId = @NegotiationId", new { NegotiationId = negotiationId, Status = 2, UserAttempts = currentAttempts });
         }
 
-        public async Task<bool> CheckIfUserHasPendingNegotiationForProduct(int userId, int ProductId)
+        public async Task<Negotiation> GetUserNegotiationForProduct(int userId, int ProductId)
         {
             using IDbConnection conn = Connection;
             conn.Open();
             var negotiation = await conn.QueryFirstOrDefaultAsync<Negotiation>
-            ("SELECT * FROM Negotiations WHERE CreatorUserId = @CreatorUserId AND ProductId = @ProductId AND Status = @Status",
-                new { CreatorUserId = userId, ProductId = ProductId, Status = 0 });
-            if(negotiation != null)
-            {
-                return true;
-            }
+            ("SELECT * FROM Negotiations WHERE CreatorUserId = @CreatorUserId AND ProductId = @ProductId",
+                new { CreatorUserId = userId, ProductId = ProductId});
 
-            return false;
+            return negotiation;
         }
         
         //bump negotiation. If your negotiation got rejected you can bump it with new better price, up to three times.
         //if you bump it three times and it gets rejected again, you can't bump it anymore.
-        public async Task BumpNegotiationAsync(int negotiationId, int newPrice, int currentAttempts, CancellationToken ct = default)
+        public async Task BumpNegotiationAsync(int negotiationId, decimal newPrice, int currentAttempts, CancellationToken ct = default)
         {
+            currentAttempts = currentAttempts + 1;
             using IDbConnection conn = Connection;
             conn.Open();
-            await conn.ExecuteAsync("UPDATE Negotiations SET ProposedPrice = @ProposedPrice, UserAttempts = @UserAttempts WHERE NegotiationId = @NegotiationId", new { NegotiationId = negotiationId, ProposedPrice = newPrice, UserAttempts = currentAttempts++ });
+            await conn.ExecuteAsync("UPDATE Negotiations SET ProposedPrice = @ProposedPrice, Status = @Status WHERE NegotiationId = @NegotiationId", new { NegotiationId = negotiationId, ProposedPrice = newPrice, Status = 0 });
         }
     }

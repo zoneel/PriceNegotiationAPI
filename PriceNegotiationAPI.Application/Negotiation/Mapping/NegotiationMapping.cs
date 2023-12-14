@@ -11,7 +11,7 @@ public class NegotiationMapping
         {
             ProductId = addNegotiation.ProductId,
             ProposedPrice = addNegotiation.ProposedPrice,
-            UserAttempts = 1,
+            UserAttempts = 0,
             Status = 0,
             CreatorUserId = userId
         };

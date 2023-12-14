@@ -46,6 +46,16 @@ public class ExceptionHandlingMiddleware : IMiddleware
                         statusCode = highballOfferException.StatusCode;
                         context.Response.StatusCode = StatusCodes.Status406NotAcceptable;
                         break;
+                    case NegotiationAlreadyAcceptedException negotiationAlreadyAcceptedException:
+                        errorMessage = $"[{negotiationAlreadyAcceptedException.StatusCode}] {negotiationAlreadyAcceptedException.GetType().Name} - {negotiationAlreadyAcceptedException.Message}";
+                        statusCode = negotiationAlreadyAcceptedException.StatusCode;
+                        context.Response.StatusCode = StatusCodes.Status409Conflict;
+                        break;
+                    case TooManyAttemptsException tooManyAttemptsException:
+                        errorMessage = $"[{tooManyAttemptsException.StatusCode}] {tooManyAttemptsException.GetType().Name} - {tooManyAttemptsException.Message}";
+                        statusCode = tooManyAttemptsException.StatusCode;
+                        context.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+                        break;
                 }
 
                 _logger.LogError(errorMessage); // Log the error

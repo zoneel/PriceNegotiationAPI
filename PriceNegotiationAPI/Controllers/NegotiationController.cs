@@ -42,6 +42,7 @@ public class NegotiationController : ControllerBase
         return Ok(new { Status = "Negotiation Created" });
     }
 
+    [Authorize(Policy = "EmployeeOnlyPolicy")]
     [HttpPut("{negotiationId}/accept")]
     public async Task<IActionResult> AcceptNegotiation([FromRoute]int negotiationId)
     {
@@ -49,6 +50,7 @@ public class NegotiationController : ControllerBase
         return Ok(new { Status = "Negotiation accepted" });
     }
 
+    [Authorize(Policy = "EmployeeOnlyPolicy")]
     [HttpPut("{negotiationId}/reject")]
     public async Task<IActionResult> RejectNegotiation([FromRoute]int negotiationId)
     {
@@ -56,6 +58,7 @@ public class NegotiationController : ControllerBase
         return Ok(new { Status = "Negotiation rejected" });
     }
     
+    [Authorize(Policy = "EmployeeOnlyPolicy")]
     [HttpGet("all")]
     public async Task<IActionResult> GetAllNegotiations()
     {
@@ -63,6 +66,7 @@ public class NegotiationController : ControllerBase
         return Ok(negotiations);
     }
     
+    [Authorize(Policy = "EmployeeOnlyPolicy")]
     [HttpGet("pending")]
     public async Task<IActionResult> GetAllPendingNegotiations()
     {
