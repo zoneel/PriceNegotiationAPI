@@ -1,0 +1,36 @@
+﻿networks:
+  pricenegotiation:
+
+services:
+  pricenegotiationdb:
+    container_name: pricenegotiationdb
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "8002:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password123
+      - MSSQL_SA_PASSWORD=Password123
+      - MSSQL_PID=Developer
+      - MSSQL_TCP_PORT=1433
+    volumes:
+      - ./sql-scripts/init-script.sql:/sql-scripts/init-script.sql:z  # Mount the SQL script into the container
+    networks:
+        - pricenegotiation
+    
+  pricenegotiationapi:
+    container_name: pricenegotiationapi
+    image: pricenegotiationapi
+    build:
+      context: .
+      dockerfile: PriceNegotiationAPI/Dockerfile
+    ports:
+        - "5000:80"
+    depends_on:
+        - pricenegotiationdb
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:80
+        - ConnectionStrings__PriceNegotiationDB=Server=localhost,8002;Database=PriceNegotiationDB;User Id=sa;Password=Password123;
+    networks:
+      - pricenegotiation
