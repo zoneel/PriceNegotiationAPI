@@ -7,7 +7,7 @@ using PriceNegotiationAPI.Domain.Security;
 
 namespace PriceNegotiationAPI.Application.User.Command.Login;
 
-internal class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, JwtToken>
+public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, JwtToken>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
@@ -22,7 +22,7 @@ internal class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, JwtTo
     public async Task<JwtToken> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetUserByEmailAsync(request.Dto.Email, cancellationToken);
-        if(user.Email == null) throw new InvalidCredentialsException("Invalid email or password");
+        if(user == null) throw new InvalidCredentialsException("Invalid email or password");
         
         if (!_passwordManager.ValidateAsync(request.Dto.Password, user.Password, cancellationToken)) 
             throw new InvalidCredentialsException("Invalid username or password");

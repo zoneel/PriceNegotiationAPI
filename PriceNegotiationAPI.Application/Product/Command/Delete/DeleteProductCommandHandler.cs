@@ -4,7 +4,7 @@ using PriceNegotiationAPI.Domain.Repository;
 
 namespace PriceNegotiationAPI.Application.Product.Command.Delete;
 
-internal class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand>
+public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand>
 {
     private readonly IProductRepository _productRepository;
 

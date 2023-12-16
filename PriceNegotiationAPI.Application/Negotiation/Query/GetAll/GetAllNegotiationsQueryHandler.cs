@@ -6,7 +6,7 @@ using PriceNegotiationAPI.Domain.Repository;
 
 namespace PriceNegotiationAPI.Application.Negotiation.Query.GetAll;
 
-internal class GetAllNegotiationsQueryHandler : IQueryHandler<GetAllNegotiationsQuery, List<ShowNegotiationDto>>
+public class GetAllNegotiationsQueryHandler : IQueryHandler<GetAllNegotiationsQuery, List<ShowNegotiationDto>>
 {
     private readonly INegotiationRepository _negotiationRepository;
     public GetAllNegotiationsQueryHandler(INegotiationRepository negotiationRepository)

@@ -8,7 +8,7 @@ using PriceNegotiationAPI.Domain.Repository;
 
 namespace PriceNegotiationAPI.Application.Negotiation.Command.Create;
 
-internal class CreateNegotiationCommandHandler : ICommandHandler<CreateNegotiationCommand>
+public class CreateNegotiationCommandHandler : ICommandHandler<CreateNegotiationCommand>
 {
     private readonly INegotiationRepository _negotiationRepository;
     private readonly IProductRepository _productRepository;

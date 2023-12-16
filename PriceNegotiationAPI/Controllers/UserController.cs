@@ -26,6 +26,11 @@ public class UserController : ControllerBase
         _userLoginValidator = userLoginValidator;
     }
 
+    /// <summary>
+    /// Registers a new user.
+    /// </summary>
+    /// <param name="user">Dto for registering new user.</param>
+    /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto user)
@@ -42,6 +47,12 @@ public class UserController : ControllerBase
         return Ok(new { Status = "User Registered" });
     }
 
+    /// <summary>
+    /// Login user and get a JWT token.
+    /// </summary>
+    /// <param name="user">dto for logging in.</param>
+    /// <returns>JWT token</returns>
+    /// <exception cref="InvalidCredentialsException"></exception>
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<JwtToken> LoginUser([FromBody] LoginUserDto user)

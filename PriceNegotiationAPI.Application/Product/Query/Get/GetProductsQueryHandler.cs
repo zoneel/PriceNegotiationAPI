@@ -5,7 +5,7 @@ using PriceNegotiationAPI.Domain.Repository;
 
 namespace PriceNegotiationAPI.Application.Product.Query.Get;
 
-internal class GetProductsQueryHandler : IQueryHandler<GetProductsQuery, IEnumerable<ProductDto>>
+public class GetProductsQueryHandler : IQueryHandler<GetProductsQuery, IEnumerable<ProductDto>>
 {
     private readonly IProductRepository _productRepository;
     public GetProductsQueryHandler(IProductRepository productRepository)

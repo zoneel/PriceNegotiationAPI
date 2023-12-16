@@ -5,7 +5,7 @@ using PriceNegotiationAPI.Domain.Repository;
 
 namespace PriceNegotiationAPI.Application.Negotiation.Command.Accept;
 
-internal class AcceptNegotiationCommandHandler : ICommandHandler<AcceptNegotiationCommand>
+public class AcceptNegotiationCommandHandler : ICommandHandler<AcceptNegotiationCommand>
 {
 private readonly INegotiationRepository _negotiationRepository;
     public AcceptNegotiationCommandHandler(INegotiationRepository negotiationRepository)

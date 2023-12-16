@@ -41,7 +41,7 @@ public class ProductRepository : IProductRepository
         using IDbConnection conn = Connection;
         conn.Open();
         var product = await conn.QueryFirstOrDefaultAsync<Product>("SELECT * FROM Products WHERE ProductID = @ProductId", new { ProductId = productId });
-        product.Id = productId;
+        product.ProductId = productId;
         return product;
     }
 

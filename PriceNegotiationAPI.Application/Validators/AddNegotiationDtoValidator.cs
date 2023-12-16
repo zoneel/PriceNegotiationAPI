@@ -10,7 +10,5 @@ public class AddNegotiationDtoValidator : AbstractValidator<AddNegotiationDto>
     {
         RuleFor(x => x.ProductId).NotEmpty().WithMessage("Product Id is required");
         RuleFor(x => x.ProposedPrice).NotEmpty().WithMessage("Proposed Price is required");
-        
-        //add validation if negotiation offeredPrice is two times smaller than product base price then return error
     }
 }

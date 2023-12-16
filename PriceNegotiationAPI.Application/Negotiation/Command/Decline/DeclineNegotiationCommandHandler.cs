@@ -5,7 +5,7 @@ using PriceNegotiationAPI.Domain.Repository;
 
 namespace PriceNegotiationAPI.Application.Negotiation.Command.Decline;
 
-internal class DeclineNegotiationCommandHandler : ICommandHandler<DeclineNegotiationCommand>
+public class DeclineNegotiationCommandHandler : ICommandHandler<DeclineNegotiationCommand>
 {
     private readonly INegotiationRepository _negotiationRepository;
     public DeclineNegotiationCommandHandler(INegotiationRepository negotiationRepository)

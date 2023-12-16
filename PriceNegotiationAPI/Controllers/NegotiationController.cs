@@ -26,6 +26,11 @@ public class NegotiationController : ControllerBase
         _negotiationValidator = negotiationValidator;
     }
     
+    /// <summary>
+    /// Creates a new negotiation.
+    /// </summary>
+    /// <param name="addNegotiation">dto for adding new negotiation</param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> CreateNegotiation([FromBody] AddNegotiationDto addNegotiation)
     {
@@ -42,6 +47,11 @@ public class NegotiationController : ControllerBase
         return Ok(new { Status = "Negotiation Created" });
     }
 
+    /// <summary>
+    /// Accepts a negotiation.
+    /// </summary>
+    /// <param name="negotiationId">negotiationId of negotiation to accept.</param>
+    /// <returns></returns>
     [Authorize(Policy = "EmployeeOnlyPolicy")]
     [HttpPut("{negotiationId}/accept")]
     public async Task<IActionResult> AcceptNegotiation([FromRoute]int negotiationId)
@@ -50,6 +60,11 @@ public class NegotiationController : ControllerBase
         return Ok(new { Status = "Negotiation accepted" });
     }
 
+    /// <summary>
+    /// Rejects a negotiation.
+    /// </summary>
+    /// <param name="negotiationId">negotiationId of negotiation to reject.</param>
+    /// <returns></returns>
     [Authorize(Policy = "EmployeeOnlyPolicy")]
     [HttpPut("{negotiationId}/reject")]
     public async Task<IActionResult> RejectNegotiation([FromRoute]int negotiationId)
@@ -58,19 +73,27 @@ public class NegotiationController : ControllerBase
         return Ok(new { Status = "Negotiation rejected" });
     }
     
+    /// <summary>
+    /// Get all negotiations
+    /// </summary>
+    /// <returns></returns>
     [Authorize(Policy = "EmployeeOnlyPolicy")]
     [HttpGet("all")]
-    public async Task<IActionResult> GetAllNegotiations()
+    public async Task<List<ShowNegotiationDto>> GetAllNegotiations()
     {
         var negotiations = await _mediator.Send(new GetAllNegotiationsQuery());
-        return Ok(negotiations);
+        return negotiations;
     }
     
+    /// <summary>
+    /// Get all pending negotiations.
+    /// </summary>
+    /// <returns></returns>
     [Authorize(Policy = "EmployeeOnlyPolicy")]
     [HttpGet("pending")]
-    public async Task<IActionResult> GetAllPendingNegotiations()
+    public async Task<List<ShowNegotiationDto>> GetAllPendingNegotiations()
     {
         var negotiations = await _mediator.Send(new GetPendingNegotiationsQuery());
-        return Ok(negotiations);
+        return negotiations;
     }
 }

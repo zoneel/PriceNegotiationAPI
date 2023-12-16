@@ -27,6 +27,11 @@ public class ProductController : ControllerBase
         _idValidator = idValidator;
     }
     
+    /// <summary>
+    /// Creates a new product.
+    /// </summary>
+    /// <param name="product">dto for creating a product.</param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] AddProductDto product)
     {
@@ -42,6 +47,10 @@ public class ProductController : ControllerBase
         return Ok(new { Status = "Product Created" });
     }
 
+    /// <summary>
+    /// Get all products.
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IEnumerable<ProductDto>> ShowProducts()
     {
@@ -49,6 +58,11 @@ public class ProductController : ControllerBase
         return products;
     }
 
+    /// <summary>
+    /// Delete product by Id.
+    /// </summary>
+    /// <param name="productId">Id of a product to delete.</param>
+    /// <returns></returns>
     [HttpDelete("{productId}")]
     public async Task<IActionResult> DeleteProduct([FromRoute]int productId)
     {

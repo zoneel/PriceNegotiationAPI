@@ -6,7 +6,7 @@ using PriceNegotiationAPI.Domain.Repository;
 
 namespace PriceNegotiationAPI.Application.Negotiation.Query.GetPending;
 
-internal class GetPendingNegotiationsQueryHandler : IQueryHandler<GetPendingNegotiationsQuery, List<ShowNegotiationDto>>
+public  class GetPendingNegotiationsQueryHandler : IQueryHandler<GetPendingNegotiationsQuery, List<ShowNegotiationDto>>
 {
     private readonly INegotiationRepository _negotiationRepository;
     public GetPendingNegotiationsQueryHandler(INegotiationRepository negotiationRepository)

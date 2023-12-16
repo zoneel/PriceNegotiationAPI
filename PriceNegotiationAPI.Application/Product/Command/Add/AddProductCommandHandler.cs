@@ -4,7 +4,7 @@ using PriceNegotiationAPI.Domain.Repository;
 
 namespace PriceNegotiationAPI.Application.Product.Command.Add;
 
-internal class AddProductCommandHandler : ICommandHandler<AddProductCommand>
+public class AddProductCommandHandler : ICommandHandler<AddProductCommand>
 {
     private readonly IProductRepository _productRepository;
 

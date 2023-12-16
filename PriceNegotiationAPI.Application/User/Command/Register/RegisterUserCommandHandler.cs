@@ -5,7 +5,7 @@ using PriceNegotiationAPI.Domain.Security;
 
 namespace PriceNegotiationAPI.Application.User.Command.Register;
 
-internal class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
+public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;

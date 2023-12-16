@@ -1,5 +1,4 @@
 ﻿using PriceNegotiationAPI.Application.Negotiation.Dto;
-using PriceNegotiationAPI.Domain.ValueObject;
 
 namespace PriceNegotiationAPI.Application.Negotiation.Mapping;
 

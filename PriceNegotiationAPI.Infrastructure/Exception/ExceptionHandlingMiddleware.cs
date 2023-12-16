@@ -21,7 +21,7 @@ public class ExceptionHandlingMiddleware : IMiddleware
             }
             catch (System.Exception e)
             {
-                string errorMessage = "[Middleware] An unexpected error occurred.";
+                string errorMessage = "[Middleware] An unexpected error occurred."+ e.Message; //TODO: Change this message
                 int statusCode = StatusCodes.Status500InternalServerError;
 
                 switch (e)

@@ -1,3 +1,4 @@
+using System.Reflection;
 using PriceNegotiationAPI.Application.Configuration;
 using PriceNegotiationAPI.Configuration;
 using PriceNegotiationAPI.Infrastructure.Configuration;
@@ -11,8 +12,11 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        
         builder.Services
-            .AddSwaggerGen()
+            .AddSwaggerGen(s => s.IncludeXmlComments(xmlPath))
             .AddApplication(builder.Configuration)
             .AddInfrastructure()
             .AddPresentation()
