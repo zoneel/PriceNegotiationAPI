@@ -59,7 +59,8 @@ public static class ServiceCollection
             .AddTransient<IValidator<AddNegotiationDto>, AddNegotiationDtoValidator>()
             .AddSingleton<IPasswordHasher<Domain.Entities.User>, PasswordHasher<Domain.Entities.User>>()
             .AddTransient<IPasswordManager, PasswordManager>()
-            .AddTransient<IJwtService, JwtService>();
+            .AddTransient<IJwtService, JwtService>()
+            .AddTransient<IUserIdentity, UserIdentity>();
         
         return services;
     }

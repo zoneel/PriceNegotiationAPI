@@ -9,6 +9,7 @@ using PriceNegotiationAPI.Application.Negotiation.Command.Decline;
 using PriceNegotiationAPI.Application.Negotiation.Dto;
 using PriceNegotiationAPI.Application.Negotiation.Query.GetAll;
 using PriceNegotiationAPI.Application.Negotiation.Query.GetPending;
+using PriceNegotiationAPI.Domain.Security;
 
 namespace PriceNegotiationAPI.Controllers;
 
@@ -19,11 +20,13 @@ public class NegotiationController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IValidator<AddNegotiationDto> _negotiationValidator;
+    private readonly IUserIdentity _userIdentity;
 
-    public NegotiationController(IMediator mediator, IValidator<AddNegotiationDto> negotiationValidator)
+    public NegotiationController(IMediator mediator, IValidator<AddNegotiationDto> negotiationValidator, IUserIdentity userIdentity)
     {
         _mediator = mediator;
         _negotiationValidator = negotiationValidator;
+        _userIdentity = userIdentity;
     }
     
     /// <summary>
@@ -34,9 +37,9 @@ public class NegotiationController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateNegotiation([FromBody] AddNegotiationDto addNegotiation)
     {
-        var userId = Convert.ToInt32(HttpContext.User.FindFirst(JwtRegisteredClaimNames.Sid).Value);
+        var userId = _userIdentity.GetUserId(HttpContext);
+        
         var validationResult = await _negotiationValidator.ValidateAsync(addNegotiation);
-
         if (!validationResult.IsValid)
         {
             var errors = validationResult.Errors.Select(error => error.ErrorMessage);

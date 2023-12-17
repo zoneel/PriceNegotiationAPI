@@ -8,6 +8,7 @@ using PriceNegotiationAPI.Application.Product.Command.Delete;
 using PriceNegotiationAPI.Application.Product.Dto;
 using PriceNegotiationAPI.Application.Product.Query.Get;
 using PriceNegotiationAPI.Application.Validators;
+using PriceNegotiationAPI.Domain.Security;
 
 namespace PriceNegotiationAPI.Controllers;
 
