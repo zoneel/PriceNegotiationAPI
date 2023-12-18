@@ -16,7 +16,7 @@ namespace PriceNegotiationAPI.Infrastructure.Repository;
             _configuration = configuration;
         }
 
-        public IDbConnection Connection => new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+        private IDbConnection Connection => new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
         public async Task<List<Negotiation>> GetAllNegotiationsAsync(CancellationToken ct = default)
         {
             using IDbConnection conn = Connection;
